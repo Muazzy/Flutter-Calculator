@@ -11,6 +11,12 @@ class _HomeState extends State<Home> {
   String result = "0";
   String expression = "";
 
+  //for operand button's color changing logic
+  bool isDivisionClicked = false;
+  bool isMultiplyClicked = false;
+  bool isAdditionClicked = false;
+  bool isSubtractionClicked = false;
+
   //calculator logic
   onClicked(String buttonText) {
     setState(() {
@@ -72,7 +78,13 @@ class _HomeState extends State<Home> {
                 borderRadius: BorderRadius.circular(50),
                 side: BorderSide(width: 8),
               ),
-              onPressed: () => onClicked(buttonText),
+              onPressed: () => setState(() {
+                onClicked(buttonText);
+                isDivisionClicked = false;
+                isMultiplyClicked = false;
+                isAdditionClicked = false;
+                isSubtractionClicked = false;
+              }),
               child: Center(
                 child: Text(
                   buttonText,
@@ -93,9 +105,13 @@ class _HomeState extends State<Home> {
               highlightColor: isDarkGrey || isLightGrey
                   ? Colors.grey[600]
                   : Colors.orange[700],
-              onPressed: () {
+              onPressed: () => setState(() {
                 onClicked(buttonText);
-              },
+                isDivisionClicked = false;
+                isMultiplyClicked = false;
+                isAdditionClicked = false;
+                isSubtractionClicked = false;
+              }),
               child: Center(
                 child: Text(
                   buttonText,
@@ -168,9 +184,30 @@ class _HomeState extends State<Home> {
                             btnColor: Colors.grey[400],
                           ),
                           SizedBox(width: 10),
-                          circleButton(
-                            buttonText: '÷',
-                            btnColor: Colors.orange,
+
+                          //operand button
+                          Expanded(
+                            flex: 1,
+                            child: MaterialButton(
+                              shape: CircleBorder(),
+                              color: isDivisionClicked
+                                  ? Colors.white
+                                  : Colors.orange,
+                              onPressed: () => setState(() {
+                                onClicked('÷');
+                                isDivisionClicked = true;
+                              }),
+                              child: Center(
+                                child: Text(
+                                  '÷',
+                                  style: TextStyle(
+                                      color: isDivisionClicked
+                                          ? Colors.orange
+                                          : Colors.white,
+                                      fontSize: 30),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -197,8 +234,32 @@ class _HomeState extends State<Home> {
                             btnColor: Colors.grey[800],
                           ),
                           SizedBox(width: 10),
-                          circleButton(
-                              buttonText: '×', btnColor: Colors.orange),
+
+                          //operand button
+                          Expanded(
+                            flex: 1,
+                            child: MaterialButton(
+                              shape: CircleBorder(),
+                              color: isMultiplyClicked
+                                  ? Colors.white
+                                  : Colors.orange,
+                              onPressed: () => setState(() {
+                                onClicked('×');
+                                isMultiplyClicked = true;
+                              }),
+                              child: Center(
+                                child: Text(
+                                  '×',
+                                  style: TextStyle(
+                                    color: isMultiplyClicked
+                                        ? Colors.orange
+                                        : Colors.white,
+                                    fontSize: 30,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -224,12 +285,36 @@ class _HomeState extends State<Home> {
                             btnColor: Colors.grey[800],
                           ),
                           SizedBox(width: 10),
-                          circleButton(
-                              buttonText: '-', btnColor: Colors.orange),
+
+                          //operand button
+                          Expanded(
+                            flex: 1,
+                            child: MaterialButton(
+                              shape: CircleBorder(),
+                              color: isSubtractionClicked
+                                  ? Colors.white
+                                  : Colors.orange,
+                              onPressed: () => setState(() {
+                                onClicked('-');
+                                isSubtractionClicked = true;
+                              }),
+                              child: Center(
+                                child: Text(
+                                  '-',
+                                  style: TextStyle(
+                                      color: isSubtractionClicked
+                                          ? Colors.orange
+                                          : Colors.white,
+                                      fontSize: 30),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                     SizedBox(height: 8),
+
                     //4th row
                     Expanded(
                       flex: 1,
@@ -251,8 +336,31 @@ class _HomeState extends State<Home> {
                             btnColor: Colors.grey[800],
                           ),
                           SizedBox(width: 10),
-                          circleButton(
-                              buttonText: '+', btnColor: Colors.orange),
+
+                          //operand button
+                          Expanded(
+                            flex: 1,
+                            child: MaterialButton(
+                              shape: CircleBorder(),
+                              color: isAdditionClicked
+                                  ? Colors.white
+                                  : Colors.orange,
+                              onPressed: () => setState(() {
+                                onClicked('+');
+                                isAdditionClicked = true;
+                              }),
+                              child: Center(
+                                child: Text(
+                                  '+',
+                                  style: TextStyle(
+                                      color: isAdditionClicked
+                                          ? Colors.orange
+                                          : Colors.white,
+                                      fontSize: 30),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
