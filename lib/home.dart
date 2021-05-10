@@ -23,8 +23,20 @@ class _HomeState extends State<Home> {
       if (buttonText == 'AC') {
         output = "0";
         result = "0";
+        expression = '';
+      } else if (buttonText == '+' ||
+          buttonText == '-' ||
+          buttonText == '÷' ||
+          buttonText == '×') {
+        if (output == '0' || output == '') {
+          return;
+        } else {
+          output = output + buttonText;
+          expression = output;
+          output = '';
+        }
       } else if (buttonText == '=') {
-        expression = output;
+        expression += output;
         expression = expression.replaceAll('×', '*');
         expression = expression.replaceAll('÷', '/');
 
